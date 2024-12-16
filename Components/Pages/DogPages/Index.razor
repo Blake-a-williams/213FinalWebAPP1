@@ -1,0 +1,133 @@
+﻿@page "/dogs"
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using Blazor213FinalWebAPP.Models
+@using _213FinalWebAPP.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<_213FinalWebAPP.Data._213FinalWebAPPContext> DbFactory
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<form action="/dogs" data-enhance>
+    <input type="search" name="ageFilter" />
+
+    <input type="submit" value="Search by Age" />
+</form>
+&nbsp;&nbsp;
+<form action="/dogs" data-enhance>
+    <input type="search" name="sizeFilter" />
+    <input type="submit" value="Search by Size" />
+</form>
+&nbsp;&nbsp;
+<form action="/dogs" data-enhance>
+    <input type="search" name="breedFilter" />
+    <input type="submit" value="Search by Breed" />
+</form>
+
+<br />
+<br />
+<br />
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Breed</th>
+            <th>Size</th>
+            <th>Age</th>
+            <th>Description</th>
+            <th>Other Information</th>
+            <th>Gender</th>
+            <th>Temperament</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    @foreach (var item in DogList){
+        <tr>
+            <td>
+                <img src=@item.Images alt="dog" style="width:175px;height:175px">
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.Breed
+            </td>
+            <td>
+                @item.Size
+            </td>
+            <td>
+                @item.Age
+            </td>
+            <td>
+                @item.Description
+            </td>
+            <td>
+                @item.Other
+            </td>
+            <td>
+                @item.Gender
+            </td>
+            <td>
+                @item.Temperament
+            </td>
+            <td>
+                <a href="@($"dogs/details?id={item.Id}")">Details</a> |
+            </td>
+        </tr>
+
+    }
+</table>
+
+<p>
+    <a href="dogs/create">Create New</a>
+</p>
+
+
+@code {
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string? AgeFilter { get; set; }
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string? SizeFilter { get; set; }
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string? BreedFilter { get; set; }
+
+    public IEnumerable<Dog> DogList { get; set; } = new List<Dog>();
+    private _213FinalWebAPPContext context = default!;
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+        if (AgeFilter != null || SizeFilter != null || BreedFilter != null)
+        {
+            if (AgeFilter != null)
+            {
+                DogList = context.Dog.Where(
+                    item => item.Age.ToLower().Contains(AgeFilter)).ToList();
+            }
+            if (SizeFilter != null)
+            {
+                DogList = context.Dog.Where(
+                    item => item.Size.ToLower().Contains(SizeFilter)).ToList();
+            }
+            if (BreedFilter != null)
+            {
+                DogList = context.Dog.Where(
+                    item => item.Breed.ToLower().Contains(BreedFilter)).ToList();
+            }
+        }
+        else
+        {
+            DogList = context.Dog.ToList();
+        }
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}
