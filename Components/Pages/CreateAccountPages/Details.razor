@@ -1,0 +1,50 @@
+﻿@page "/createaccounts/details"
+@using Microsoft.EntityFrameworkCore
+@using Blazor213FinalWebAPP.Models
+@inject IDbContextFactory<_213FinalWebAPP.Data._213FinalWebAPPContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h2>CreateAccount</h2>
+    <hr />
+    @if (createaccount is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">Username</dt>
+            <dd class="col-sm-10">@createaccount.Username</dd>
+            <dt class="col-sm-2">Email</dt>
+            <dd class="col-sm-10">@createaccount.Email</dd>
+            <dt class="col-sm-2">Password</dt>
+            <dd class="col-sm-10">@createaccount.Password</dd>
+        </dl>
+        <div>
+            <a href="@($"/createaccounts/edit?id={createaccount.Id}")">Edit</a> |
+            <a href="@($"/createaccounts")">Back to List</a>
+        </div>
+    }
+</div>
+
+@code {
+    private CreateAccount? createaccount;
+
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        createaccount = await context.CreateAccount.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (createaccount is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}
