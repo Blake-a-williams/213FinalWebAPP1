@@ -37,6 +37,8 @@ namespace Blazor213FinalWebAPP.Models;
     [Required]
     [StringLength(40, MinimumLength = 2)]
     public string? Temperament { get; set; }
+    [Required]
+    public string? Availability { get; set; }
 }
 
 

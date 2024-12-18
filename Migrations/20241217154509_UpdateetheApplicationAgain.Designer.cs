@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _213FinalWebAPP.Data;
 
@@ -11,9 +12,11 @@ using _213FinalWebAPP.Data;
 namespace _213FinalWebAPP.Migrations
 {
     [DbContext(typeof(_213FinalWebAPPContext))]
-    partial class _213FinalWebAPPContextModelSnapshot : ModelSnapshot
+    [Migration("20241217154509_UpdateetheApplicationAgain")]
+    partial class UpdateetheApplicationAgain
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -225,10 +228,6 @@ namespace _213FinalWebAPP.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("Availability")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Breed")
                         .IsRequired()

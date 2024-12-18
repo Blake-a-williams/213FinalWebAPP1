@@ -1,0 +1,60 @@
+﻿@page "/adoptionapplications/details"
+@using Microsoft.EntityFrameworkCore
+@using Blazor213FinalWebAPP.Models
+@inject IDbContextFactory<_213FinalWebAPP.Data._213FinalWebAPPContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h2>AdoptionApplication</h2>
+    <hr />
+    @if (adoptionapplication is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">DogId</dt>
+            <dd class="col-sm-10">@adoptionapplication.DogId</dd>
+            <dt class="col-sm-2">UserId</dt>
+            <dd class="col-sm-10">@adoptionapplication.UserId</dd>
+            <dt class="col-sm-2">FullName</dt>
+            <dd class="col-sm-10">@adoptionapplication.FullName</dd>
+            <dt class="col-sm-2">Email</dt>
+            <dd class="col-sm-10">@adoptionapplication.Email</dd>
+            <dt class="col-sm-2">Phone</dt>
+            <dd class="col-sm-10">@adoptionapplication.Phone</dd>
+            <dt class="col-sm-2">Address</dt>
+            <dd class="col-sm-10">@adoptionapplication.Address</dd>
+            <dt class="col-sm-2">ReasonForAdoption</dt>
+            <dd class="col-sm-10">@adoptionapplication.ReasonForAdoption</dd>
+            <dt class="col-sm-2">SubmissionDate</dt>
+            <dd class="col-sm-10">@adoptionapplication.SubmissionDate</dd>
+        </dl>
+        <div>
+            <a href="@($"/adoptionapplications/edit?id={adoptionapplication.Id}")">Edit</a> |
+            <a href="@($"/adoptionapplications")">Back to List</a>
+        </div>
+    }
+</div>
+
+@code {
+    private AdoptionApplication? adoptionapplication;
+
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        adoptionapplication = await context.AdoptionApplication.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (adoptionapplication is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}

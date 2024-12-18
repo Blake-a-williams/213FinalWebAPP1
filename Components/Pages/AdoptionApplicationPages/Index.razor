@@ -1,0 +1,60 @@
+﻿@page "/adoptionapplications"
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using Blazor213FinalWebAPP.Models
+@using _213FinalWebAPP.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<_213FinalWebAPP.Data._213FinalWebAPPContext> DbFactory
+
+<PageTitle>Index</PageTitle>
+
+<h1>Adoption Qualifications</h1>
+
+<br />
+<br />
+
+<ul>
+    <li>Must be at least 21 years of age.</li> 
+    <li>Must have stable livinf conditions. Renters must show proof landlord approval</li>
+    <li>Every member of the household must be in favor of addopting a dog</li>
+    <li>You will have to provide three references</li>
+    <li>Applicants should be able to afford the costs of dog ownership, including food, medical care, and other expenses</li>
+    <li>Applicants must provide information on current animals, and all animals must be up to date on vaccines and must be sprayed/neutered</li>
+    <li>Applicants must agree to a home vist, in which a volunteer will conduct a interview, and make sure your home is a good fit for the dog.</li>
+    <li>With all adoptions there will be a adoption fee. It can vary for dogs, but the typical fee is $200</li>
+</ul>
+
+<br />
+<br />
+
+<p>
+    <a href="adoptionapplications/create">Create New Application</a>
+</p>
+
+<QuickGrid Class="table" Items="context.AdoptionApplication">
+    <PropertyColumn Property="adoptionapplication => adoptionapplication.DogId" />
+    <PropertyColumn Property="adoptionapplication => adoptionapplication.UserId" />
+    <PropertyColumn Property="adoptionapplication => adoptionapplication.FullName" />
+    <PropertyColumn Property="adoptionapplication => adoptionapplication.Email" />
+    <PropertyColumn Property="adoptionapplication => adoptionapplication.Phone" />
+    <PropertyColumn Property="adoptionapplication => adoptionapplication.Address" />
+    <PropertyColumn Property="adoptionapplication => adoptionapplication.ReasonForAdoption" />
+    <PropertyColumn Property="adoptionapplication => adoptionapplication.SubmissionDate" />
+
+    <TemplateColumn Context="adoptionapplication">
+        <a href="@($"adoptionapplications/edit?id={adoptionapplication.Id}")">Edit</a> |
+        <a href="@($"adoptionapplications/details?id={adoptionapplication.Id}")">Details</a> |
+        <a href="@($"adoptionapplications/delete?id={adoptionapplication.Id}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
+
+@code {
+    private _213FinalWebAPPContext context = default!;
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}

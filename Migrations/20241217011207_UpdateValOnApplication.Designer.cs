@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _213FinalWebAPP.Data;
 
@@ -11,9 +12,11 @@ using _213FinalWebAPP.Data;
 namespace _213FinalWebAPP.Migrations
 {
     [DbContext(typeof(_213FinalWebAPPContext))]
-    partial class _213FinalWebAPPContextModelSnapshot : ModelSnapshot
+    [Migration("20241217011207_UpdateValOnApplication")]
+    partial class UpdateValOnApplication
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,10 +45,8 @@ namespace _213FinalWebAPP.Migrations
 
                     b.Property<string>("CurrentPets")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CurrentPetsInfo")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("DogHomeAlone")
                         .IsRequired()
@@ -70,7 +71,8 @@ namespace _213FinalWebAPP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmploymentEmployer")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("EmploymentOccupation")
                         .HasMaxLength(40)
@@ -92,14 +94,13 @@ namespace _213FinalWebAPP.Migrations
                         .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("Other")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.Property<string>("PastPets")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PastPetsInfo")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
@@ -152,17 +153,13 @@ namespace _213FinalWebAPP.Migrations
                         .HasColumnType("nvarchar(55)");
 
                     b.Property<string>("ResidentsUnder21")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(55)
+                        .HasColumnType("nvarchar(55)");
 
                     b.Property<string>("Sleep")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
 
                     b.Property<DateTime>("SubmissionDate")
                         .HasColumnType("datetime2");
@@ -182,9 +179,6 @@ namespace _213FinalWebAPP.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("YardDetails")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -225,10 +219,6 @@ namespace _213FinalWebAPP.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("Availability")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Breed")
                         .IsRequired()
