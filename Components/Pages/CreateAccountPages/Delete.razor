@@ -1,0 +1,63 @@
+﻿@page "/createaccounts/delete"
+@using Microsoft.EntityFrameworkCore
+@using Blazor213FinalWebAPP.Models
+@inject IDbContextFactory<_213FinalWebAPP.Data._213FinalWebAPPContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Delete</PageTitle>
+
+<h1>Delete</h1>
+
+<p>Are you sure you want to delete this?</p>
+<div>
+    <h2>CreateAccount</h2>
+    <hr />
+    @if (createaccount is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">Username</dt>
+            <dd class="col-sm-10">@createaccount.Username</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Email</dt>
+            <dd class="col-sm-10">@createaccount.Email</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Password</dt>
+            <dd class="col-sm-10">@createaccount.Password</dd>
+        </dl>
+        <EditForm method="post" Model="createaccount" OnValidSubmit="DeleteCreateAccount" FormName="delete" Enhance>
+            <button type="submit" class="btn btn-danger" disabled="@(createaccount is null)">Delete</button> |
+            <a href="/createaccounts">Back to List</a>
+        </EditForm>
+    }
+</div>
+
+@code {
+    private CreateAccount? createaccount;
+
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        createaccount = await context.CreateAccount.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (createaccount is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    private async Task DeleteCreateAccount()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.CreateAccount.Remove(createaccount!);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/createaccounts");
+    }
+}

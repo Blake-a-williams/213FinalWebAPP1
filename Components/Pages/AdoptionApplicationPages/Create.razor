@@ -1,0 +1,255 @@
+﻿@page "/adoptionapplications/create"
+@using Microsoft.EntityFrameworkCore
+@using Blazor213FinalWebAPP.Models
+@inject IDbContextFactory<_213FinalWebAPP.Data._213FinalWebAPPContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create a New Application</h1>
+
+<h2>Adoption Application</h2>
+<hr />
+<br />
+<br />
+
+<p>* - Required Field</p>
+
+<div class="row">
+    <div class="col-md-12">
+        <EditForm method="post" Model="AdoptionApplication" OnValidSubmit="AddAdoptionApplication" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert"/>
+            @* I do not want the dog ID and user ID to be apart of the application. 
+            <div class="mb-3">
+                <label for="dogid" class="form-label">DogId:</label> 
+                <InputNumber id="dogid" @bind-Value="AdoptionApplication.DogId" class="form-control" /> 
+                <ValidationMessage For="() => AdoptionApplication.DogId" class="text-danger" /> 
+            </div> 
+
+            <div class="mb-3">
+                <label for="userid" class="form-label">UserId:</label> 
+                <InputNumber id="userid" @bind-Value="AdoptionApplication.UserId" class="form-control" /> 
+                <ValidationMessage For="() => AdoptionApplication.UserId" class="text-danger" /> 
+            </div>    
+            *@
+            <div class="mb-3">
+                <label for="fullname" class="form-label">Full Name:*</label> 
+                <InputText id="fullname" @bind-Value="AdoptionApplication.FullName" class="form-control form-control w-50" />
+                <ValidationMessage For="() => AdoptionApplication.FullName" class="text-danger" /> 
+            </div>       
+            <div class="mb-3">
+                <label for="submissiondate" class="form-label">Your Birth Date:*</label>
+                <InputDate id="submissiondate" @bind-Value="AdoptionApplication.UserAge" class="form-control form-control w-50" />
+                <ValidationMessage For="() => AdoptionApplication.UserAge" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:*</label>
+                <InputText id="email" @bind-Value="AdoptionApplication.Email" class="form-control form-control w-50" />
+                <ValidationMessage For="() => AdoptionApplication.Email" class="text-danger" /> 
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone:*</label>
+                <InputText id="phone" @bind-Value="AdoptionApplication.Phone" class="form-control form-control w-50" />
+                <ValidationMessage For="() => AdoptionApplication.Phone" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="address" class="form-label">Address:*</label>
+                <InputText id="address" @bind-Value="AdoptionApplication.Address" class="form-control form-control w-50" />
+                <ValidationMessage For="() => AdoptionApplication.Address" class="text-danger" /> 
+            </div>
+            <div class="mb-3">
+                <label for="city" class="form-label">City:*</label>
+                <InputText id="city" @bind-Value="AdoptionApplication.City" class="form-control form-control w-50" />
+                <ValidationMessage For="() => AdoptionApplication.City" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label for="state" class="form-label">State:*</label>
+                <InputText id="state" @bind-Value="AdoptionApplication.State" class="form-control form-control w-50" />
+                <ValidationMessage For="() => AdoptionApplication.State" class="text-danger" />
+            </div>
+            @*See if you can Make this a drop down menu*@
+            <div class="mb-3">
+                <label for="employed" class="form-label">Are You Employed:*</label>
+                <select id="employed" @bind="AdoptionApplication.Employed"  class="form-control w-50">
+                    <option value="">-- Select an option --</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+                <ValidationMessage For="() => AdoptionApplication.Employed" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label for="occupation" class="form-label">If Employeed, what is your Occupation</label>
+                <InputText id="occupation" @bind-Value="AdoptionApplication.EmploymentOccupation" class="form-control form-control w-50" />
+                <ValidationMessage For="() => AdoptionApplication.EmploymentOccupation" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label for="employmentemployer" class="form-label">If Employeed, Who is your Employer:</label>
+                <InputText id="employmentemployer" @bind-Value="AdoptionApplication.EmploymentEmployer" class="form-control form-control w-50" />
+                <ValidationMessage For="() => AdoptionApplication.EmploymentEmployer" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label for="housetype" class="form-label">What type of home do you live in:*</label>
+                <select id="housetype" @bind="AdoptionApplication.HouseType" class="form-control w-50">
+                    <option value="">-- Select an option --</option>
+                    <option value="House">House</option>
+                    <option value="Apartment">Apartment</option>
+                    <option value="Condo">Condo</option>
+                    <option value="Mobile Home">Mobile Home</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="rent" class="form-label">Do you Rent or Own:*</label>
+                <select id="rent" @bind="AdoptionApplication.Rent" class="form-control w-50">
+                    <option value="">-- Select an option --</option>
+                    <option value="Rent">rent</option>
+                    <option value="Own">Own</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="yard" class="form-label">Do you have a yard?</label>
+                <select id="yard" @bind="AdoptionApplication.Yard" class="form-control w-50">
+                    <option value="">-- Select an option --</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="yardDetails" class="form-label">If you do have a yard, please let us know the size and if it is fenced in:*</label>
+                <InputText id="yardDetails" @bind-Value="AdoptionApplication.YardDetails" class="form-control form-control w-50" />
+                <ValidationMessage For="() => AdoptionApplication.YardDetails" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label for="residents" class="form-label">How many residents live in your home:*</label>
+                <select id="residents" @bind="AdoptionApplication.Residents" class="form-control w-50">
+                    <option value="">-- Select an option --</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5+">5 or more</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="residentsUnder21" class="form-label">If there are other residents please provide age, and relationship:</label>
+                <InputText id="residentsUnder21" @bind-Value="AdoptionApplication.ResidentsUnder21" class="form-control form-control w-50" />
+                <ValidationMessage For="() => AdoptionApplication.ResidentsUnder21" class="text-danger" />
+            </div>
+            <div class="mb-3">@*Can I add a break and title*@
+                <label for="refName" class="form-label">Reference 1 Name:*</label>
+                <InputText id="refName" @bind-Value="AdoptionApplication.RefName" class="form-control form-control w-50" />
+                <ValidationMessage For="() => AdoptionApplication.RefName" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label for="refNumber" class="form-label">Reference 1 Phone Number:*</label>
+                <InputText id="refNumber" @bind-Value="AdoptionApplication.RefNumber" class="form-control form-control w-50" />
+                <ValidationMessage For="() => AdoptionApplication.RefNumber" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label for="refRelationship" class="form-label">Reference 1 Relationship:*</label>
+                <InputText id="refRelationship" @bind-Value="AdoptionApplication.RefRelationship" class="form-control form-control w-50" />
+                <ValidationMessage For="() => AdoptionApplication.RefRelationship" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label for="refName2" class="form-label">Reference 2 Name:*</label>
+                <InputText id="refName2" @bind-Value="AdoptionApplication.RefName2" class="form-control form-control w-50" />
+                <ValidationMessage For="() => AdoptionApplication.RefName2" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label for="refNumber2" class="form-label">Reference 2 Phone Number:*</label>
+                <InputText id="refNumber2" @bind-Value="AdoptionApplication.RefNumber2" class="form-control form-control w-50" />
+                <ValidationMessage For="() => AdoptionApplication.RefNumber2" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label for="refRelationship2" class="form-label">Reference 2 Relationship:*</label>
+                <InputText id="refRelationship2" @bind-Value="AdoptionApplication.RefRelationship2" class="form-control form-control w-50" />
+                <ValidationMessage For="() => AdoptionApplication.RefRelationship2" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label for="currentpets" class="form-label">Do you curretnly own any other pets:*</label>
+                <select id="currentpets" @bind="AdoptionApplication.CurrentPets" class="form-control w-50">
+                    <option value="">-- Select an option --</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="currentpetsInfo" class="form-label">If so, please provide species, age, and sex:</label>
+                <InputText id="currentpetsInfo" @bind-Value="AdoptionApplication.CurrentPetsInfo" class="form-control form-control w-75" style="height: 75px" />
+                <ValidationMessage For="() => AdoptionApplication.CurrentPetsInfo" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label for="pastPets" class="form-label">Have you owned any pets in the past:*</label>
+                <select id="pastPets" @bind="AdoptionApplication.PastPets" class="form-control w-50">
+                    <option value="">-- Select an option --</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="pastPetsInfo" class="form-label">If you have, please provide all possible information (species, sex, what happened to them.. etc):</label>
+                <InputText id="pastPetsInfo" @bind-Value="AdoptionApplication.PastPetsInfo" class="form-control form-control w-75" style="height: 75px" />
+                <ValidationMessage For="() => AdoptionApplication.PastPetsInfo" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label for="reasonforadoption" class="form-label">Reason For Adoption:*</label>
+                <InputText id="reasonforadoption" @bind-Value="AdoptionApplication.ReasonForAdoption" class="form-control form-control w-75" style="height: 75px" />
+                <ValidationMessage For="() => AdoptionApplication.ReasonForAdoption" class="text-danger" /> 
+            </div>
+            <div class="mb-3">
+                <label for="dogName" class="form-label">What is the name of the dog you want to adopt:*</label>
+                <InputText id="dogName" @bind-Value="AdoptionApplication.DogName" class="form-control form-control w-50" />
+                <ValidationMessage For="() => AdoptionApplication.DogName" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label for="fit" class="form-label">Why do you want this dog:*</label>
+                <InputText id="fit" @bind-Value="AdoptionApplication.Fit" class="form-control form-control w-75" style="height: 75px" />
+                <ValidationMessage For="() => AdoptionApplication.Fit" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label for="training" class="form-label">Do you have plans to train the dog:*</label>
+                <InputText id="training" @bind-Value="AdoptionApplication.Training" class="form-control form-control w-75" style="height: 75px" />
+                <ValidationMessage For="() => AdoptionApplication.Training" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label for="dogHomeAlone" class="form-label">What is the longest amount of time the dog will be alone at home:*</label>
+                <InputText id="dogHomeAlone" @bind-Value="AdoptionApplication.DogHomeAlone" class="form-control form-control w-50" />
+                <ValidationMessage For="() => AdoptionApplication.DogHomeAlone" class="text-danger" />
+            </div><div class="mb-3">@*List possible options*@
+                <label for="sleep" class="form-label">Where will the dog sleep:*</label>
+                <InputText id="sleep" @bind-Value="AdoptionApplication.Sleep" class="form-control form-control w-50" />
+                <ValidationMessage For="() => AdoptionApplication.Sleep" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label for="other" class="form-label">Any questions for us, or aditional information you would like to provide:</label>
+                <InputText id="other" @bind-Value="AdoptionApplication.Other" class="form-control form-control w-75" style="height: 75px" />
+                <ValidationMessage For="() => AdoptionApplication.Other" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label for="submissiondate" class="form-label">Submission Date:</label> 
+                <InputDate id="submissiondate" @bind-Value="AdoptionApplication.SubmissionDate" class="form-control form-control w-50" />
+                <ValidationMessage For="() => AdoptionApplication.SubmissionDate" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Submit Application</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/adoptionapplications">Back to List</a>
+</div>
+
+@code {
+
+    [SupplyParameterFromForm]
+    private AdoptionApplication AdoptionApplication { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddAdoptionApplication()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.AdoptionApplication.Add(AdoptionApplication);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/adoptionapplications");
+    }
+}

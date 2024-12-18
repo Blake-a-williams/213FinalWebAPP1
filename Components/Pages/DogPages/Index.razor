@@ -44,6 +44,7 @@
             <th>Other Information</th>
             <th>Gender</th>
             <th>Temperament</th>
+            <th>Availability</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -75,6 +76,9 @@
             </td>
             <td>
                 @item.Temperament
+            </td>
+            <td>
+                @item.Availability
             </td>
             <td>
                 <a href="@($"dogs/details?id={item.Id}")">Details</a> |

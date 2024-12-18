@@ -1,0 +1,38 @@
+﻿@page "/createaccounts"
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using Blazor213FinalWebAPP.Models
+@using _213FinalWebAPP.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<_213FinalWebAPP.Data._213FinalWebAPPContext> DbFactory
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="createaccounts/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="context.CreateAccount">
+    <PropertyColumn Property="createaccount => createaccount.Username" />
+    <PropertyColumn Property="createaccount => createaccount.Email" />
+    <PropertyColumn Property="createaccount => createaccount.Password" />
+
+    <TemplateColumn Context="createaccount">
+        <a href="@($"createaccounts/edit?id={createaccount.Id}")">Edit</a> |
+        <a href="@($"createaccounts/details?id={createaccount.Id}")">Details</a> |
+        <a href="@($"createaccounts/delete?id={createaccount.Id}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
+
+@code {
+    private _213FinalWebAPPContext context = default!;
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}
