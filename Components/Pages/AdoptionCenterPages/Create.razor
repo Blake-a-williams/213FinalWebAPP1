@@ -1,0 +1,69 @@
+﻿@page "/adoptioncenters/create"
+@using Microsoft.EntityFrameworkCore
+@using Blazor213FinalWebAPP.Models
+@inject IDbContextFactory<_213FinalWebAPP.Data._213FinalWebAPPContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>AdoptionCenter</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="AdoptionCenter" OnValidSubmit="AddAdoptionCenter" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert"/>
+            <div class="mb-3">
+                <label for="message" class="form-label">Message:</label> 
+                <InputText id="message" @bind-Value="AdoptionCenter.Message" class="form-control" /> 
+                <ValidationMessage For="() => AdoptionCenter.Message" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="senderfname" class="form-label">SenderFName:</label> 
+                <InputText id="senderfname" @bind-Value="AdoptionCenter.SenderFName" class="form-control" /> 
+                <ValidationMessage For="() => AdoptionCenter.SenderFName" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="senderlname" class="form-label">SenderLName:</label> 
+                <InputText id="senderlname" @bind-Value="AdoptionCenter.SenderLName" class="form-control" /> 
+                <ValidationMessage For="() => AdoptionCenter.SenderLName" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="messagedesc" class="form-label">MessageDesc:</label> 
+                <InputText id="messagedesc" @bind-Value="AdoptionCenter.MessageDesc" class="form-control" /> 
+                <ValidationMessage For="() => AdoptionCenter.MessageDesc" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="phonenumber" class="form-label">PhoneNumber:</label> 
+                <InputText id="phonenumber" @bind-Value="AdoptionCenter.PhoneNumber" class="form-control" /> 
+                <ValidationMessage For="() => AdoptionCenter.PhoneNumber" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label> 
+                <InputText id="email" @bind-Value="AdoptionCenter.Email" class="form-control" /> 
+                <ValidationMessage For="() => AdoptionCenter.Email" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/adoptioncenters">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private AdoptionCenter AdoptionCenter { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddAdoptionCenter()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.AdoptionCenter.Add(AdoptionCenter);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/adoptioncenters");
+    }
+}

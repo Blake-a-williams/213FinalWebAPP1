@@ -87,10 +87,10 @@
 
     }
 </table>
-
+@*
 <p>
     <a href="dogs/create">Create New</a>
-</p>
+</p>*@
 
 
 @code {
@@ -109,6 +109,9 @@
     protected override void OnInitialized()
     {
         context = DbFactory.CreateDbContext();
+
+        IQueryable<Dog> query = context.Dog;
+
         if (AgeFilter != null || SizeFilter != null || BreedFilter != null)
         {
             if (AgeFilter != null)

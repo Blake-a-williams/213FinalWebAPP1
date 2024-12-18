@@ -1,0 +1,114 @@
+﻿@page "/adoptioncenters/edit"
+@using Microsoft.EntityFrameworkCore
+@using Blazor213FinalWebAPP.Models
+@inject IDbContextFactory<_213FinalWebAPP.Data._213FinalWebAPPContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit</PageTitle>
+
+<h1>Edit</h1>
+
+<h2>AdoptionCenter</h2>
+<hr />
+@if (AdoptionCenter is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="AdoptionCenter" OnValidSubmit="UpdateAdoptionCenter" FormName="edit" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary role="alert"/>
+                <input type="hidden" name="AdoptionCenter.ID" value="@AdoptionCenter.ID" />
+                <div class="mb-3">
+                    <label for="message" class="form-label">Message:</label>
+                    <InputText id="message" @bind-Value="AdoptionCenter.Message" class="form-control" />
+                    <ValidationMessage For="() => AdoptionCenter.Message" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="senderfname" class="form-label">SenderFName:</label>
+                    <InputText id="senderfname" @bind-Value="AdoptionCenter.SenderFName" class="form-control" />
+                    <ValidationMessage For="() => AdoptionCenter.SenderFName" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="senderlname" class="form-label">SenderLName:</label>
+                    <InputText id="senderlname" @bind-Value="AdoptionCenter.SenderLName" class="form-control" />
+                    <ValidationMessage For="() => AdoptionCenter.SenderLName" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="messagedesc" class="form-label">MessageDesc:</label>
+                    <InputText id="messagedesc" @bind-Value="AdoptionCenter.MessageDesc" class="form-control" />
+                    <ValidationMessage For="() => AdoptionCenter.MessageDesc" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="phonenumber" class="form-label">PhoneNumber:</label>
+                    <InputText id="phonenumber" @bind-Value="AdoptionCenter.PhoneNumber" class="form-control" />
+                    <ValidationMessage For="() => AdoptionCenter.PhoneNumber" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <InputText id="email" @bind-Value="AdoptionCenter.Email" class="form-control" />
+                    <ValidationMessage For="() => AdoptionCenter.Email" class="text-danger" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/adoptioncenters">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    private int ID { get; set; }
+
+    [SupplyParameterFromForm]
+    private AdoptionCenter? AdoptionCenter { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        AdoptionCenter ??= await context.AdoptionCenter.FirstOrDefaultAsync(m => m.ID == ID);
+
+        if (AdoptionCenter is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task UpdateAdoptionCenter()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Attach(AdoptionCenter!).State = EntityState.Modified;
+
+        try
+        {
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!AdoptionCenterExists(AdoptionCenter!.ID))
+            {
+                NavigationManager.NavigateTo("notfound");
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        NavigationManager.NavigateTo("/adoptioncenters");
+    }
+
+    private bool AdoptionCenterExists(int id)
+    {
+        using var context = DbFactory.CreateDbContext();
+        return context.AdoptionCenter.Any(e => e.ID == id);
+    }
+}

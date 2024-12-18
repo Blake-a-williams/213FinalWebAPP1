@@ -8,9 +8,78 @@
 
 <PageTitle>Index</PageTitle>
 
-<h1>Adoption Qualifications</h1>
-
+<h1>Submit an application</h1>
 <br />
+
+<p>
+    <button onclick="window.location.href='adoptionapplications/create'" style="background-color: blue; color: white;">Create New Application</button>
+</p>
+<br />
+
+<div class="adoption-process">
+    <h2>Dog Adoption Process</h2>
+    <ol>
+        <li>
+            <strong>Browse Available Dogs</strong>
+            <ul>
+                <li>Visit the "Available Dogs" section of the website to see profiles of dogs ready for adoption.</li>
+                <li>Use filters to find a dog that suits your preferences.</li>
+            </ul>
+        </li>
+        <li>
+            <strong>Learn About Your Match</strong>
+            <ul>
+                <li>Click on a dog’s profile to view detailed information, including personality traits, medical history, and care requirements.</li>
+                <li>If you find a dog you’re interested in, make note of their name.</li>
+            </ul>
+        </li>
+        <li>
+            <strong>Submit an Adoption Application</strong>
+            <ul>
+                <li>Fill out the online adoption application form.</li>
+                <li>The form is linked above</li>
+            </ul>
+        </li>
+        <li>
+            <strong>Application Review</strong>
+            <ul>
+                <li>Our team will review your application.</li>
+                <li>You may be contacted for additional information or to schedule a phone interview.</li>
+            </ul>
+        </li>
+        <li>
+            <strong>Conduct Home Vist</strong>
+            <ul>
+                <li>One of our members will conduct a home visit, and interview where they will ask any aditional questions.</li>
+                <li>They will take note of your house to see if it is safe for a dog. Additionally they will meet all residents to ensure everyone wants a dog.</li>
+            </ul>
+        </li>
+        <li>
+            <strong>Meet the Dog</strong>
+            <ul>
+                <li>Once approved, you’ll be invited to meet the dog in person.</li>
+                <li>Visits can be scheduled at the adoption center or a foster home, depending on the dog’s location.</li>
+            </ul>
+        </li>
+        <li>
+            <strong>Complete the Adoption Process</strong>
+            <ul>
+                <li>If it’s a match, you’ll complete the adoption paperwork.</li>
+                <li>Pay the adoption fee, which helps cover the cost of veterinary care and supplies.</li>
+            </ul>
+        </li>
+        <li>
+            <strong>Bring Your New Dog Home</strong>
+            <ul>
+                <li>Prepare your home with essential supplies (e.g., food, bed, leash, and toys).</li>
+                <li>Bring your new furry friend home and give them time to adjust to their new environment.</li>
+            </ul>
+        </li>
+    </ol>
+</div>
+
+<h2>Adoption Qualifications </h2>
+
 <br />
 
 <ul>
@@ -25,12 +94,8 @@
 </ul>
 
 <br />
-<br />
 
-<p>
-    <a href="adoptionapplications/create">Create New Application</a>
-</p>
-
+@*
 <QuickGrid Class="table" Items="context.AdoptionApplication">
     <PropertyColumn Property="adoptionapplication => adoptionapplication.DogId" />
     <PropertyColumn Property="adoptionapplication => adoptionapplication.UserId" />
@@ -46,7 +111,17 @@
         <a href="@($"adoptionapplications/details?id={adoptionapplication.Id}")">Details</a> |
         <a href="@($"adoptionapplications/delete?id={adoptionapplication.Id}")">Delete</a>
     </TemplateColumn>
-</QuickGrid>
+</QuickGrid>*@
+
+<br />
+<br />
+
+<p>
+    <i>
+        Please note: Submission of an application does not guarantee that the specified dog will be available for adoption upon approval.
+        We often receive multiple applications for the same dog.
+    </i>
+</p>
 
 @code {
     private _213FinalWebAPPContext context = default!;

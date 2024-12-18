@@ -17,5 +17,6 @@ namespace _213FinalWebAPP.Data
         public DbSet<Blazor213FinalWebAPP.Models.Dog> Dog { get; set; } = default!;
         public DbSet<Blazor213FinalWebAPP.Models.CreateAccount> CreateAccount { get; set; } = default!;
         public DbSet<Blazor213FinalWebAPP.Models.AdoptionApplication> AdoptionApplication { get; set; } = default!;
+        public DbSet<Blazor213FinalWebAPP.Models.AdoptionCenter> AdoptionCenter { get; set; } = default!;
     }
 }

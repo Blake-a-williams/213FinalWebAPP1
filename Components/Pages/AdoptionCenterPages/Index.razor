@@ -1,0 +1,81 @@
+﻿@page "/adoptioncenters"
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using Blazor213FinalWebAPP.Models
+@using _213FinalWebAPP.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<_213FinalWebAPP.Data._213FinalWebAPPContext> DbFactory
+
+<PageTitle>Fargo Dog Adoption Center</PageTitle>
+
+<h1><strong>About Us</strong></h1>
+<br /> 
+<table class="table">
+    <tr>
+        <td class="form-control w-75 no-border">
+            <p>
+                Welcome to Fargo Dog Adoption Center, where every dog deserves a loving home. We are a non-profit organization dedicated to
+                rescuing, rehabilitating, and rehoming dogs in need. Our mission is to connect compassionate individuals and families with their perfect furry
+                companions, while promoting responsible pet ownership and raising awareness about animal welfare.
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td class="form-control w-75 no-border">
+            <p>
+                Founded in December of 2024, we have helped many dogs find new homes and provide education and support to pet parents.
+                Our team consists of passionate volunteers, veterinarians, and experienced shelter staff working together to make a difference
+                in the lives of dogs and their adopters. We believe in second chances, and we’re here to help you find your new best friend.
+            </p>
+        </td>
+    </tr>
+</table>
+
+<style>
+    .no-border {
+        border: none;
+    }
+</style>
+
+<h2><strong>Contact Information</strong></h2>
+<p>We’d love to hear from you! Whether you're interested in adopting, volunteering, donating, or simply learning more, please feel free to reach out to us.</p>
+<p><strong>Phone Number:</strong> 701-123-4567</p>
+<p><strong>Email:</strong> fargoadoption@ndsu.edu</p>
+<p><strong>Address:</strong> 1234 12th ave Fargo ND 58102</p>
+<p><strong>Social Media:</strong> FargodDogAdoption on Facebook, and Instagram</p>
+
+
+
+<p>
+    <a href="adoptioncenters/create">Contact Us</a>
+</p>
+@*
+<QuickGrid Class="table" Items="context.AdoptionCenter">
+    <PropertyColumn Property="adoptioncenter => adoptioncenter.Message" />
+    <PropertyColumn Property="adoptioncenter => adoptioncenter.SenderFName" />
+    <PropertyColumn Property="adoptioncenter => adoptioncenter.SenderLName" />
+    <PropertyColumn Property="adoptioncenter => adoptioncenter.MessageDesc" />
+    <PropertyColumn Property="adoptioncenter => adoptioncenter.PhoneNumber" />
+    <PropertyColumn Property="adoptioncenter => adoptioncenter.Email" />
+
+    <TemplateColumn Context="adoptioncenter">
+        <a href="@($"adoptioncenters/edit?id={adoptioncenter.ID}")">Edit</a> |
+        <a href="@($"adoptioncenters/details?id={adoptioncenter.ID}")">Details</a> |
+        <a href="@($"adoptioncenters/delete?id={adoptioncenter.ID}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>*@
+
+<br />
+<br />
+<br />
+
+@code {
+    private _213FinalWebAPPContext context = default!;
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}

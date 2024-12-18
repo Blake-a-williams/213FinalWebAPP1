@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using _213FinalWebAPP.Data;
+using Blazor213FinalWebAPP.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContextFactory<_213FinalWebAPPContext>(options =>
@@ -16,6 +17,14 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    SeedData1.Initialize(services);
+}
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
