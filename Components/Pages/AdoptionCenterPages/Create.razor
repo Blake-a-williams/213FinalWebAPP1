@@ -6,36 +6,49 @@
 
 <PageTitle>Create</PageTitle>
 
-<h1>Create</h1>
+<h1>Message Us</h1>
 
-<h2>AdoptionCenter</h2>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <EditForm method="post" Model="AdoptionCenter" OnValidSubmit="AddAdoptionCenter" FormName="create" Enhance>
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" role="alert"/>
-            <div class="mb-3">
-                <label for="message" class="form-label">Message:</label> 
-                <InputText id="message" @bind-Value="AdoptionCenter.Message" class="form-control" /> 
-                <ValidationMessage For="() => AdoptionCenter.Message" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="senderfname" class="form-label">SenderFName:</label> 
-                <InputText id="senderfname" @bind-Value="AdoptionCenter.SenderFName" class="form-control" /> 
-                <ValidationMessage For="() => AdoptionCenter.SenderFName" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="senderlname" class="form-label">SenderLName:</label> 
-                <InputText id="senderlname" @bind-Value="AdoptionCenter.SenderLName" class="form-control" /> 
-                <ValidationMessage For="() => AdoptionCenter.SenderLName" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="messagedesc" class="form-label">MessageDesc:</label> 
-                <InputText id="messagedesc" @bind-Value="AdoptionCenter.MessageDesc" class="form-control" /> 
-                <ValidationMessage For="() => AdoptionCenter.MessageDesc" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
+            <div class="mb-12">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="senderfname" class="form-label">First Name:</label>
+                        <InputText id="senderfname" @bind-Value="AdoptionCenter.SenderFName" class="form-control" />
+                        <ValidationMessage For="() => AdoptionCenter.SenderFName" class="text-danger" />
+                    </div>
+                    <div class="col-md-3">
+                        <label for="senderlname" class="form-label">Last Name:</label>
+                        <InputText id="senderlname" @bind-Value="AdoptionCenter.SenderLName" class="form-control" />
+                        <ValidationMessage For="() => AdoptionCenter.SenderLName" class="text-danger" />
+                    </div>
+                </div>
+            </div>
+                
+            <div class="mb-12">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="email" class="form-label">Email:</label>
+                        <InputText id="email" @bind-Value="AdoptionCenter.Email" class="form-control" />
+                        <ValidationMessage For="() => AdoptionCenter.Email" class="text-danger" />
+                    </div>
+                    <div class="col-md-3">
+                        <label for="phonenumber" class="form-label">Phone Number:</label>
+                        <InputText id="phonenumber" @bind-Value="AdoptionCenter.PhoneNumber" class="form-control" />
+                        <ValidationMessage For="() => AdoptionCenter.PhoneNumber" class="text-danger" />
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3"
+                <label for="message" class="form-label">Message:</label>
+                <InputText id="message" @bind-Value="AdoptionCenter.Message" class="form-control form-control w-50" style="height: 75px"/>
+                <ValidationMessage For="() => AdoptionCenter.Message" class="text-danger" />
+            </div>
+            @*<div class="mb-3">
                 <label for="phonenumber" class="form-label">PhoneNumber:</label> 
                 <InputText id="phonenumber" @bind-Value="AdoptionCenter.PhoneNumber" class="form-control" /> 
                 <ValidationMessage For="() => AdoptionCenter.PhoneNumber" class="text-danger" /> 
@@ -44,8 +57,8 @@
                 <label for="email" class="form-label">Email:</label> 
                 <InputText id="email" @bind-Value="AdoptionCenter.Email" class="form-control" /> 
                 <ValidationMessage For="() => AdoptionCenter.Email" class="text-danger" /> 
-            </div>        
-            <button type="submit" class="btn btn-primary">Create</button>
+            </div>*@        
+            <button type="submit" class="btn btn-primary">Send</button>
         </EditForm>
     </div>
 </div>

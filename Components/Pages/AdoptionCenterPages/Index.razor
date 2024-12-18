@@ -9,7 +9,7 @@
 <PageTitle>Fargo Dog Adoption Center</PageTitle>
 
 <h1><strong>About Us</strong></h1>
-<br /> 
+
 <table class="table">
     <tr>
         <td class="form-control w-75 no-border">
@@ -43,12 +43,27 @@
 <p><strong>Email:</strong> fargoadoption@ndsu.edu</p>
 <p><strong>Address:</strong> 1234 12th ave Fargo ND 58102</p>
 <p><strong>Social Media:</strong> FargodDogAdoption on Facebook, and Instagram</p>
-
-
+<br />
+<br />
 
 <p>
-    <a href="adoptioncenters/create">Contact Us</a>
+    <button onclick="window.location.href='adoptioncenters/create'" style="background-color: blue; color: white;">Send Us a Message</button>
 </p>
+
+<h2><strong>FAQ</strong></h2>
+
+<table class="table">
+    @foreach (var item in FAQList){
+        <tr>
+            <p><strong>Q: </strong><span>@item.Question</span></p>
+        </tr>
+        <tr>
+            <p><strong>A: </strong><span>@item.Answer</span></p><br />
+        </tr>
+    }
+</table>
+
+
 @*
 <QuickGrid Class="table" Items="context.AdoptionCenter">
     <PropertyColumn Property="adoptioncenter => adoptioncenter.Message" />
@@ -70,11 +85,14 @@
 <br />
 
 @code {
+    public IEnumerable<FAQ> FAQList { get; set; } = new List<FAQ>();
+
     private _213FinalWebAPPContext context = default!;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        context = DbFactory.CreateDbContext();
+        context = await DbFactory.CreateDbContextAsync(); 
+        FAQList = await context.FAQ.ToListAsync(); 
     }
 
     public async ValueTask DisposeAsync() => await context.DisposeAsync();
